@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  Next.js:
+    container_name: Next.js
+    image: node:14.17.4-alpine
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    command: ash -c 'yarn && yarn dev'
+    ports:
+      - '3000:3000'
+    tty: true
