@@ -1,34 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# docker で Next.js×Express×Mysql のアプリケーションを構築。Next.js 編
 
-## Getting Started
+## 環境構築手順
 
-First, run the development server:
+git pull でソースコード pull
 
-```bash
-npm run dev
-# or
-yarn dev
+```
+git pll https://github.com/sochan-dev/docker-practice-frontend-next.js.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+イメージのプルとコンテナの作成
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+docker-compose up -d
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+command: ash -c 'yarn && yarn dev'により、<br/>
+パッケージインストールと起動も行われる。
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## コンテナ起動（docker-compose up -d 以降）
 
-## Learn More
+docker-compose up して docker-stop だとコンテナが増え続ける。<br/>
+一度作ったコンテナを起動する際は start を使う。
 
-To learn more about Next.js, take a look at the following resources:
+```
+docker-compose start -d
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## docker ファイルを更新した場合
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+docker-compose build --no-cache
+```
 
-## Deploy on Vercel
+これでキャッシュを使わずにイメージを再ビルドできる。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 気を付けた点
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Next.js の場合 SWC の機能の互換性が無く以下のエラーが出る。
+
+```
+error - Failed to load SWC binary, see more info here: https://nextjs.org/docs/messages/failed-loading-swc
+```
+
+SWC の設定をオフにするか、SWC に必要なパッケージをインストールすると解決する。<br/>
+→ 今回は SWC に必要なパッケージをインストールして解決した ↓
+
+```
+yarn add next@11.1.1-canary.7
+```
