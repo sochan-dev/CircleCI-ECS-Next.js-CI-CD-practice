@@ -36,7 +36,7 @@ docker-compose build --no-cache
 
 ## 気を付けた点
 
-Next.js の場合 SWC の機能の互換性が無く以下のエラーが出る。
+### Next.js の場合 SWC の機能の互換性が無く以下のエラーが出る。
 
 ```
 error - Failed to load SWC binary, see more info here: https://nextjs.org/docs/messages/failed-loading-swc
@@ -47,4 +47,21 @@ SWC の設定をオフにするか、SWC に必要なパッケージをインス
 
 ```
 yarn add next@11.1.1-canary.7
+```
+
+### ホットリロードされない問題
+
+以下で解決すると思ったが、ホットリロードされないままだった。
+自分のＯＳは windows
+
+```
+environment:
+      - CHOKIDAR_USEPOLLING=true
+```
+
+docker on windows の場合は以下で解決した。
+
+```
+environment:
+            - CHOKIDAR_USEPOLLING=true
 ```
