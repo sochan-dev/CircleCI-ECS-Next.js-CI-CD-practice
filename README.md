@@ -61,7 +61,29 @@ environment:
 
 docker on windows の場合は以下で解決した。
 
+docker-compose.yml
+
 ```
 environment:
             - CHOKIDAR_USEPOLLING=true
+```
+
+next.config.js
+
+```
+const nextConfig = {
+  reactStrictMode: true,
+  //追加ここから
+  webpackDevMiddleware: (config) => {
+    config.watchOptions = {
+      poll: 800,
+      aggregateTimeout: 300,
+    };
+    return config;
+  },
+  //ここまで
+};
+
+module.exports = nextConfig;
+
 ```
