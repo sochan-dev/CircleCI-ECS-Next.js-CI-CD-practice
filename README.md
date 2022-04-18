@@ -1,4 +1,6 @@
-# docker で Next.js×Express×Mysql のアプリケーションを構築。Next.js 編
+# docker で Next.js×Express×Mysql のアプリケーションを構築。Next.js 編 nodemon を添えて...
+
+TypeScript、eslint、prettier を使用。
 
 ## 環境構築手順
 
