@@ -18,7 +18,7 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "package.json" }}
       - run:
           name: yarn test
-          command: yarn test
+          command: yarn test:ci
 
 workflows:
   version: 2
