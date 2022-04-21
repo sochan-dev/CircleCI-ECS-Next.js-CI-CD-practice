@@ -24,4 +24,4 @@ workflows:
   version: 2
   workflows_frontend:
     jobs:
-      - test
+      - test_frontend
