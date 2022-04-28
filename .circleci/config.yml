@@ -33,7 +33,7 @@ workflows:
           requires:
             - test_frontend
           region: AWS_REGION
-          account-url: AWS_ACCOUNT_URL
+          account-url: AWS_ECR_ACCOUNT_URL
           repo: 'ecs-sample-frontend-image'
           tag: '${CIRCLE_SHA1}'
           filters:
