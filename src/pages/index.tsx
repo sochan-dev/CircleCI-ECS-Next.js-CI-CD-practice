@@ -10,7 +10,7 @@ type TestExpressMysql = {
 };
 const Home: NextPage = () => {
   const [testExpressMysql, setTestExpressMysql] = useState<TestExpressMysql>({
-    msg: 'まだですね。',
+    msg: 'まだですね!',
     result: [],
   });
   useEffect(() => {
