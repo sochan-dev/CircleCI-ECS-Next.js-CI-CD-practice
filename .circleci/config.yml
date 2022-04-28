@@ -1,4 +1,9 @@
-version: 2
+version: 2.1
+
+orbs:
+  # orbsの名前は長くて面倒なのでエイリアスを付けて扱う↓
+  aws-ecr: circleci/aws-ecr@8.1.0
+  aws-ecs: circleci/aws-ecs@2.2.1
 
 jobs:
   test_frontend:
@@ -21,7 +26,28 @@ jobs:
           command: yarn test:ci
 
 workflows:
-  version: 2
-  workflows_frontend:
+  workflows_frontend_test_build_push_deploy:
     jobs:
       - test_frontend
+      - aws-ecr/build-and-push-image:
+          requires:
+            - test_frontend
+          region: AWS_REGION
+          account-url: AWS_ACCOUNT_URL
+          repo: 'ecs-sample-frontend-image'
+          tag: '${CIRCLE_SHA1}'
+          filters:
+            branches:
+              only:
+                - main
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
+          family: 'ecs-sample-task-definition-frontend'
+          cluster-name: 'ecs-sample-cluster'
+          service-name: 'ecs-sample-service-frontend'
+          container-image-name-updates: 'container=ecs-sample-container-frontend,tag=${CIRCLE_SHA1}'
+          filters:
+            branches:
+              only:
+                - main
