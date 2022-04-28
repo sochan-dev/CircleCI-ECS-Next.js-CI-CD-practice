@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   # orbsの名前は長くて面倒なのでエイリアスを付けて扱う↓
   aws-ecr: circleci/aws-ecr@6.12.2
-  aws-ecs: circleci/aws-ecs@2.2.1
+  aws-ecs: circleci/aws-ecs@0.0.8
 
 jobs:
   test_frontend:
